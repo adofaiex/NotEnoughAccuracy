@@ -1,0 +1,12 @@
+{
+	"Id": "NotEnoughAccuracy",
+	"DisplayName": "Not Enough Accuracy",
+	"Author": "Yqloss",
+	"Version": "1.0.0",
+	"ManagerVersion": "0.27.0",
+	"Requirements": [],
+	"AssemblyName": "NotEnoughAccuracy.dll",
+	"EntryMethod": "NotEnoughAccuracy.Main.Load",
+	"HomePage": "https://nea.yqloss.net",
+	"Repository": "https://nea-git.yqloss.net/NotEnoughAccuracy"
+}

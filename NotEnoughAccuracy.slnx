@@ -1,0 +1,4 @@
+<Solution>
+	<Project Path="NotEnoughAccuracy.csproj"/>
+	<Project Path="build\ADOFAIMod.BuildTasks\ADOFAIMod.BuildTasks.csproj"/>
+</Solution>

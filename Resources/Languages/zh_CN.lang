@@ -1,0 +1,37 @@
+Name=简体中文
+Parents=_common en_US
+
+Page.Language.Name=语言 Language
+
+Page.Setting.Name=设置
+Page.Setting.DisplayInGame=游戏内在左下角显示无尽精准度
+Page.Setting.InGameFontSize=游戏内无尽精准度字号
+Page.Setting.DisplayInDetailedResults=在详细结果中显示无尽精准度
+Page.Setting.DisplayInJudgementTexts=在判定文本中显示无尽精准度
+Page.Setting.NoDisplayPerfect=显示无尽精准度时不显示“完美！”
+
+Page.Introduction.Name=无尽精准度介绍
+Page.Introduction.Content=觉得 XPerfect 还是不够严格？
+Page.Introduction.Content=无尽精准度（Not Enough Accuracy, NEAcc., NEA）会将每一毫秒的偏移纳入计算，力求做到完全精确。
+Page.Introduction.Content=刷准，永无止境！
+Page.Introduction.Content=<s>在我的电脑上自动播放只打出了 98% 无尽精准度的成绩。</s>
+Page.Introduction.Content=
+Page.Introduction.Content=<b>本模组并不影响游戏的判定，只是提供了一种计算精准度的方法！</b>
+Page.Introduction.Content=
+Page.Introduction.Content=<size=150%>计算方法</size>
+Page.Introduction.Content=
+Page.Introduction.Content=格数 = 中旋只算一个格子的格子总数
+Page.Introduction.Content=<color=grey>相当于：格数 = 太快！+ 稍快！+ 完美！+ 稍慢！+ 太慢！+ 失误…… - 中旋数量</color>
+Page.Introduction.Content=
+Page.Introduction.Content=每个格子的分数为（只考虑会向前移动的判定）：
+Page.Introduction.Content=• -100 如果开启了不会失败模式且判定为“失误……”
+Page.Introduction.Content=• max(100-abs(x), 0) 其中 x 为与精准时机偏差的毫秒数（与实际判定无关）
+Page.Introduction.Content=<color=grey>也就是说：每个格子基础分数为 100，每偏移一毫秒扣一分，扣到 0 分为止；没有按到的格子计 -100 分</color>
+Page.Introduction.Content=
+Page.Introduction.Content=每个“太快！！”和“太慢！！”扣除 50 分。
+Page.Introduction.Content=每个“按太快……”扣除 100 分。
+Page.Introduction.Content=总分数 = 将上方所有分数相加
+Page.Introduction.Content=
+Page.Introduction.Content=无尽精准度百分比 = 总分数 / 格数
+
+Game.DetailedResults=无尽精准度: <color=#00FFFF>{0:0.0000}%</color>

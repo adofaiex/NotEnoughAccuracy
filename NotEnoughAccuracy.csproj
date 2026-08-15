@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net481</TargetFramework>
+		<OutputType>Library</OutputType>
+		<RootNamespace>NotEnoughAccuracy</RootNamespace>
+		<AssemblyName>NotEnoughAccuracy</AssemblyName>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<OutputPath>bin\$(Configuration)\</OutputPath>
+		<DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<DebugType>pdbonly</DebugType>
+		<Optimize>true</Optimize>
+		<DefineConstants>TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AutoLaunchGame>true</AutoLaunchGame>
+	</PropertyGroup>
+
+	<Import Project="ADOFAIMod.targets"/>
+
+	<ItemGroup>
+		<Compile Remove="build\**\*.cs"/>
+
+		<None Update="Resources\**\*">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
