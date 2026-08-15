@@ -8,5 +8,5 @@
 	"AssemblyName": "NotEnoughAccuracy.dll",
 	"EntryMethod": "NotEnoughAccuracy.Main.Load",
 	"HomePage": "https://nea.yqloss.net",
-	"Repository": "https://nea-git.yqloss.net/NotEnoughAccuracy"
+	"Repository": "https://ummrepo.nea.yqloss.net/"
 }
