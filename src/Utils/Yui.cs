@@ -1801,7 +1801,7 @@ public static class Yui
 					GetPoint(270, 9)
 				);
 				path.CloseFigure();
-				path.AddLine(size * 10 / 20F, size * 7 / 20F, size * 10 / 20F, size * 10.5F / 20F);
+				path.AddLine(size * 10 / 20F, size * 6 / 20F, size * 10 / 20F, size * 9.5F / 20F);
 				using var pen = new Pen(DrawingColor(strokeColor), size * 1.5F / 20F);
 				pen.StartCap = LineCap.Round;
 				pen.EndCap = LineCap.Round;
@@ -1810,7 +1810,7 @@ public static class Yui
 			}
 			{
 				var path = new GraphicsPath();
-				path.AddArc(size * 9.25F / 20F, size * 12.25F / 20F, size * 1.5F / 20F, size * 1.5F / 20F, 0, 360);
+				path.AddArc(size * 9.25F / 20F, size * 11.25F / 20F, size * 1.5F / 20F, size * 1.5F / 20F, 0, 360);
 				path.CloseFigure();
 				using var pen = new SolidBrush(DrawingColor(strokeColor));
 				graphics.FillPath(pen, path);

@@ -2,7 +2,7 @@
 	"Id": "NotEnoughAccuracy",
 	"DisplayName": "Not Enough Accuracy",
 	"Author": "Yqloss",
-	"Version": "1.0.0",
+	"Version": "1.1.0",
 	"ManagerVersion": "0.27.0",
 	"Requirements": [],
 	"AssemblyName": "NotEnoughAccuracy.dll",

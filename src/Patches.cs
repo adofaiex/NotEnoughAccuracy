@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using HarmonyLib;
+using NotEnoughAccuracy.ReplayCompatibility;
 using NotEnoughAccuracy.Utils;
 
 // ReSharper disable UnusedMember.Global
@@ -14,15 +15,17 @@ public static class Patches
 {
 	internal const long FullScore = 1_000_000;
 
-	private static readonly Regex RegexInjectedJudgementText = new(@"\u200B.*?\u200B");
+	private static readonly Regex RegexInjectedJudgmentText = new(@"\u200B.*?\u200B");
 
 	private static long TileScore { get; set; }
 
-	internal static List<long> Judgements { get; } = [];
+	internal static List<long> Judgment { get; } = [];
 
 	internal static List<long> AccumulatedScores { get; } = [];
 
 	internal static List<long> AccumulatedTiles { get; } = [];
+
+	internal static List<int> TileIds { get; } = [];
 
 	internal static long CachedScore { get; private set; }
 
@@ -35,26 +38,27 @@ public static class Patches
 		return r >= 0 ? r - 1 : r + 1;
 	}
 
-	private static unit AddJudgement(long judgement)
+	private static unit AddJudgment(long judgment)
 	{
-		Judgements.Add(judgement);
+		Judgment.Add(judgment);
 		var score = AccumulatedScores is [.., var s] ? s : 0;
 		var tiles = AccumulatedTiles is [.., var t] ? t : 0;
-		unit _ = judgement switch
+		unit _ = judgment switch
 		{
 			-1 => [],
 			-2 => [++tiles, score -= 100],
 			-3 => [score -= 100],
 			-4 => [score -= 50],
-			_ => [++tiles, score += judgement]
+			_ => [++tiles, score += judgment]
 		};
 		AccumulatedScores.Add(score);
 		AccumulatedTiles.Add(tiles);
-		CacheJudgementResults();
+		TileIds.Add(scrController.instance.currFloor.seqID);
+		CacheJudgmentResults();
 		return [];
 	}
 
-	private static unit CacheJudgementResults()
+	private static unit CacheJudgmentResults()
 	{
 		var score = AccumulatedScores is [.., var s] ? s : 0;
 		var tiles = AccumulatedTiles is [.., var t] ? t : 0;
@@ -74,7 +78,7 @@ public static class Patches
 		public static void Postfix(ref string __result)
 		{
 			if (!Mod.Settings.DisplayInDetailedResults) return;
-			CacheJudgementResults();
+			CacheJudgmentResults();
 			__result = $"{__result.TrimEnd()}\n{Lang.Translate("Game.DetailedResults", CachedScore / 10000m)}";
 		}
 	}
@@ -85,7 +89,7 @@ public static class Patches
 		public static void Prefix(scrHitTextMesh __instance)
 		{
 			var text = __instance.text.text;
-			if (Mod.Settings.DisplayInJudgementTexts && !scrController.instance.playerOne.midspinInfiniteMargin)
+			if (Mod.Settings.DisplayInJudgmentTexts && !scrController.instance.playerOne.midspinInfiniteMargin)
 			{
 				if (Mod.Settings.NoDisplayPerfect && __instance.hitMargin == HitMargin.Perfect)
 				{
@@ -112,7 +116,7 @@ public static class Patches
 
 					if (score is null) return;
 
-					text = RegexInjectedJudgementText.Replace(text, "");
+					text = RegexInjectedJudgmentText.Replace(text, "");
 					text += $"\u200B {score}\u200B";
 					__instance.text.text = text;
 				}
@@ -129,6 +133,15 @@ public static class Patches
 	{
 		public static void Prefix(scrPlanet __instance)
 		{
+			if (ReplayStoragePluginV1.Replaying is { } ctx)
+			{
+				var index = ReplayStoragePluginV1.ReplayingOffset + Judgment.Count;
+				if (index < ctx.Judgments.Count)
+				{
+					TileScore = ctx.Judgments[index];
+					return;
+				}
+			}
 			var rad = __instance.cachedAngle - __instance.targetExitAngle;
 			if (!__instance.planetarySystem.isCW) rad = -rad;
 			var ms = RadToMs(
@@ -145,10 +158,10 @@ public static class Patches
 	{
 		public static void Prefix()
 		{
-			Judgements.Clear();
+			Judgment.Clear();
 			AccumulatedScores.Clear();
 			AccumulatedTiles.Clear();
-			CacheJudgementResults();
+			CacheJudgmentResults();
 		}
 	}
 
@@ -157,13 +170,16 @@ public static class Patches
 	{
 		public static void Prefix(HitMargin hit)
 		{
-			AddJudgement(
+			AddJudgment(
 				scrController.instance.playerOne.midspinInfiniteMargin
 					? -1
 					: hit switch
 					{
-						HitMargin.Multipress => -1,
-						HitMargin.OverPress => -3,
+						// Normally Multipress and Overpress would not appear here,
+						// but I count them as TooEarly just in case.
+						HitMargin.Multipress => -4,
+						HitMargin.OverPress => -4,
+						
 						HitMargin.FailMiss => -2,
 						HitMargin.FailOverload => -3,
 						HitMargin.TooEarly => -4,
@@ -171,7 +187,7 @@ public static class Patches
 						_ => TileScore
 					}
 			);
-			CacheJudgementResults();
+			CacheJudgmentResults();
 		}
 	}
 
@@ -181,10 +197,10 @@ public static class Patches
 		public static void Postfix(scrMarginTracker __instance)
 		{
 			var leave = __instance.hitMargins.Count;
-			AccumulatedScores.RemoveRange(leave, Judgements.Count - leave);
-			AccumulatedTiles.RemoveRange(leave, Judgements.Count - leave);
-			Judgements.RemoveRange(leave, Judgements.Count - leave);
-			CacheJudgementResults();
+			AccumulatedScores.RemoveRange(leave, Judgment.Count - leave);
+			AccumulatedTiles.RemoveRange(leave, Judgment.Count - leave);
+			Judgment.RemoveRange(leave, Judgment.Count - leave);
+			CacheJudgmentResults();
 		}
 	}
 }

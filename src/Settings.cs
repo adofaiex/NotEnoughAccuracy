@@ -15,7 +15,7 @@ public class Settings : UnityModManager.ModSettings
 
 	public bool DisplayInDetailedResults = true;
 
-	public bool DisplayInJudgementTexts = true;
+	public bool DisplayInJudgmentTexts = true;
 
 	public bool NoDisplayPerfect = true;
 

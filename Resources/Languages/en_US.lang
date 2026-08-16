@@ -7,7 +7,7 @@ Page.Setting.Name=Settings
 Page.Setting.DisplayInGame=Display NE-Accuracy in-game at the bottom left corner
 Page.Setting.InGameFontSize=In-game overlay font size
 Page.Setting.DisplayInDetailedResults=Display NE-Accuracy in detailed results
-Page.Setting.DisplayInJudgementTexts=Display NE-Accuracy in judgement texts
+Page.Setting.DisplayInJudgmentTexts=Display NE-Accuracy in judgment texts
 Page.Setting.NoDisplayPerfect=Don't show "Perfect!" when displaying NE-Accuracy
 
 Page.Introduction.Name=NE-Accuracy Introduction

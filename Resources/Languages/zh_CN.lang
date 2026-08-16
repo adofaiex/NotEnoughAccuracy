@@ -7,7 +7,7 @@ Page.Setting.Name=设置
 Page.Setting.DisplayInGame=游戏内在左下角显示无尽精准度
 Page.Setting.InGameFontSize=游戏内无尽精准度字号
 Page.Setting.DisplayInDetailedResults=在详细结果中显示无尽精准度
-Page.Setting.DisplayInJudgementTexts=在判定文本中显示无尽精准度
+Page.Setting.DisplayInJudgmentTexts=在判定文本中显示无尽精准度
 Page.Setting.NoDisplayPerfect=显示无尽精准度时不显示“完美！”
 
 Page.Introduction.Name=无尽精准度介绍

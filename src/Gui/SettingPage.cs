@@ -40,8 +40,8 @@ public static class SettingPage
 
 		SwitchOption(
 			group,
-			ref Mod.Settings.DisplayInJudgementTexts,
-			"Page.Setting.DisplayInJudgementTexts"
+			ref Mod.Settings.DisplayInJudgmentTexts,
+			"Page.Setting.DisplayInJudgmentTexts"
 		);
 
 		Separator();
