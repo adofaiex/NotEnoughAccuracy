@@ -3,9 +3,24 @@ Parents=_common en_US
 
 Page.Language.Name=语言 Language
 
+Anchor.Dummy=喵
+Anchor.Anchor=<<< 锚点
+Anchor.0=左上
+Anchor.1=上
+Anchor.2=右上
+Anchor.3=左
+Anchor.4=中心
+Anchor.5=右
+Anchor.6=左下
+Anchor.7=下
+Anchor.8=右下
+Anchor.OffsetX=X 偏移
+Anchor.OffsetY=Y 偏移
+
 Page.Setting.Name=设置
 Page.Setting.DisplayInGame=游戏内在左下角显示无尽精准度
 Page.Setting.InGameFontSize=游戏内无尽精准度字号
+Page.Setting.InGamePosition=游戏内无尽精准度位置
 Page.Setting.DisplayInDetailedResults=在详细结果中显示无尽精准度
 Page.Setting.DisplayInJudgmentTexts=在判定文本中显示无尽精准度
 Page.Setting.NoDisplayPerfect=显示无尽精准度时不显示“完美！”

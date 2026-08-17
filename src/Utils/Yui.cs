@@ -26,7 +26,8 @@ public static class Yui
 	public enum ButtonStyle
 	{
 		Element,
-		Primary
+		Primary,
+		Dummy
 	}
 
 	public enum ContainerDirection
@@ -373,6 +374,7 @@ public static class Yui
 			{
 				ButtonStyle.Element => Resolution.ElementButton,
 				ButtonStyle.Primary => Resolution.PrimaryButton,
+				ButtonStyle.Dummy => Resolution.DummyButton,
 				_ => Resolution.ElementButton
 			}),
 			Options(options)
@@ -893,6 +895,8 @@ public static class Yui
 
 		private const double IconBorder = 2;
 
+		private static readonly ColorGroup DummyColors = new(Argb(0));
+
 		private static readonly ColorGroup Background0Colors = new(Rgb(0x151617));
 
 		private static readonly ColorGroup Background1Colors = new(Rgb(0x0D0E0F));
@@ -1086,6 +1090,15 @@ public static class Yui
 			SetupTextColors(PrimaryButton, TitleTextColors);
 			SetupRoundedRectangleBackground(PrimaryButton, Scaled(ButtonRadius), PrimaryColors);
 
+			DummyButton = new GUIStyle(Base)
+			{
+				name = "YCH Dummy Button"
+			};
+
+			SetupTextSize(DummyButton, ScaledInt(BaseTextSize), true);
+			SetupTextColors(DummyButton, DummyColors);
+			SetupRoundedRectangleBackground(DummyButton, Scaled(ButtonRadius), DummyColors);
+
 			var squareIconSize = ScaledInt(SquareIconSize);
 
 			CheckboxOff = new GUIStyle(Base)
@@ -1243,10 +1256,12 @@ public static class Yui
 
 		public GUIStyle PrimaryButton { get; }
 
+		public GUIStyle DummyButton { get; }
+
 		public GUIStyle CheckboxOff { get; }
 
 		public GUIStyle CheckboxOn { get; }
-
+		
 		public GUIStyle ArrowButtonRight { get; }
 
 		public GUIStyle ArrowButtonDown { get; }
@@ -1254,13 +1269,13 @@ public static class Yui
 		public GUIStyle ArrowButtonLeft { get; }
 
 		public GUIStyle ArrowButtonUp { get; }
-
+		
 		public GUIStyle SwitchOff { get; }
 
 		public GUIStyle SwitchOn { get; }
-
+		
 		public GUIStyle InputField { get; }
-
+		
 		public GUIStyle IconInformation { get; }
 
 		public GUIStyle IconSuccess { get; }
@@ -1268,7 +1283,7 @@ public static class Yui
 		public GUIStyle IconWarning { get; }
 
 		public GUIStyle IconError { get; }
-
+		
 		public double Margin { get; }
 
 		public List<Texture2D> Textures { get; } = [];
@@ -2011,8 +2026,8 @@ public static class Yui
 		{
 			return new Disposable(() =>
 			{
-				a.Dispose();
 				b.Dispose();
+				a.Dispose();
 			});
 		}
 	}

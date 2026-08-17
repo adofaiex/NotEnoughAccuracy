@@ -13,6 +13,12 @@ public class Settings : UnityModManager.ModSettings
 
 	public double InGameFontSize = 96.0;
 
+	public int InGameAnchor = 6;
+
+	public double InGameOffsetX = 0;
+
+	public double InGameOffsetY = 0;
+
 	public bool DisplayInDetailedResults = true;
 
 	public bool DisplayInJudgmentTexts = true;

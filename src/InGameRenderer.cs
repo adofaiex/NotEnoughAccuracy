@@ -39,10 +39,47 @@ public static class InGameRenderer
 		set => ScoreText.fontSize = Math.Max((float)value, 1);
 	}
 
+	public static int Anchor
+	{
+		set
+		{
+			var (align, anchor) = value switch
+			{
+				0 => (TextAlignmentOptions.TopLeft, new Vector2(0.0F, 1.0F)),
+				1 => (TextAlignmentOptions.Top, new Vector2(0.5F, 1.0F)),
+				2 => (TextAlignmentOptions.TopRight, new Vector2(1.0F, 1.0F)),
+				3 => (TextAlignmentOptions.Left, new Vector2(0.0F, 0.5F)),
+				4 => (TextAlignmentOptions.Center, new Vector2(0.5F, 0.5F)),
+				5 => (TextAlignmentOptions.Right, new Vector2(1.0F, 0.5F)),
+				6 => (TextAlignmentOptions.BottomLeft, new Vector2(0.0F, 0.0F)),
+				7 => (TextAlignmentOptions.Bottom, new Vector2(0.5F, 0.0F)),
+				8 => (TextAlignmentOptions.BottomRight, new Vector2(1.0F, 0.0F)),
+				_ => (TextAlignmentOptions.TopLeft, new Vector2(0.0F, 1.0F))
+			};
+			ScoreText.alignment = align;
+			ScoreText.rectTransform.anchorMin = anchor;
+			ScoreText.rectTransform.anchorMax = anchor;
+			ScoreText.rectTransform.pivot = anchor;
+		}
+	}
+
+	public static double OffsetX
+	{
+		set => ScoreText.rectTransform.anchoredPosition =
+			new Vector2((float)value, ScoreText.rectTransform.anchoredPosition.y);
+	}
+
+	public static double OffsetY
+	{
+		set => ScoreText.rectTransform.anchoredPosition =
+			new Vector2(ScoreText.rectTransform.anchoredPosition.x, -(float)value);
+	}
+
 	static InGameRenderer()
 	{
 		Object.DontDestroyOnLoad(Root);
 		var rect = Root.GetComponent<RectTransform>();
+
 		rect.anchorMin = Vector2.zero;
 		rect.anchorMax = Vector2.one;
 		rect.offsetMin = Vector2.zero;
@@ -53,19 +90,17 @@ public static class InGameRenderer
 		TextLayer.transform.SetParent(Root.transform, false);
 		ScoreText.font = FontAsset;
 		ScoreText.text = "0";
-		ScoreText.fontSize = 96;
+		FontSize = Mod.Settings.InGameFontSize;
 		ScoreText.outlineWidth = 0.25F;
 		ScoreText.outlineColor = Color.black;
 		ScoreText.color = Color.white;
 		ScoreText.raycastTarget = false;
 		ScoreText.alignment = TextAlignmentOptions.BottomLeft;
 		ScoreText.autoSizeTextContainer = false;
-		var rt = ScoreText.rectTransform;
-		rt.anchorMin = Vector2.zero;
-		rt.anchorMax = Vector2.zero;
-		rt.pivot = Vector2.zero;
-		rt.anchoredPosition = Vector2.zero;
-		rt.sizeDelta = new Vector2(1920, 1080);
+		Anchor = Mod.Settings.InGameAnchor;
+		OffsetX = Mod.Settings.InGameOffsetX;
+		OffsetY = Mod.Settings.InGameOffsetY;
+		ScoreText.rectTransform.sizeDelta = new Vector2(1920, 1080);
 		var mat = ScoreText.fontMaterial;
 		mat.SetFloat(ShaderUtilities.ID_OutlineWidth, 0.25F);
 		mat.SetColor(ShaderUtilities.ID_OutlineColor, Color.black);
